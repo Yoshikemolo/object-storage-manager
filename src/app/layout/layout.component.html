@@ -1,0 +1,14 @@
+<div class="layout-wrapper">
+  <app-header (menuToggle)="toggleSidebar()"></app-header>
+  
+  <div class="layout-main">
+    <app-sidebar 
+      [(visible)]="sidebarVisible"
+      class="layout-sidebar">
+    </app-sidebar>
+    
+    <div class="layout-content">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

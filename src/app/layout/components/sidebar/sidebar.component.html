@@ -1,0 +1,39 @@
+<p-sidebar 
+  [(visible)]="visible" 
+  [modal]="false"
+  [showCloseIcon]="true"
+  styleClass="app-sidebar"
+  position="left">
+  
+  <ng-template pTemplate="header">
+    <div class="sidebar-header">
+      <i class="pi pi-database"></i>
+      <span>Storage Manager</span>
+    </div>
+  </ng-template>
+  
+  <div class="sidebar-content">
+    <p-menu [model]="menuItems" styleClass="sidebar-menu"></p-menu>
+    
+    <div class="storage-info" *ngIf="storageInfo">
+      <h4>Storage Info</h4>
+      <div class="info-item">
+        <span class="info-label">Status:</span>
+        <span class="info-value">
+          <i class="pi pi-circle-fill" 
+             [class.text-success]="storageInfo.success"
+             [class.text-danger]="!storageInfo.success"></i>
+          {{ storageInfo.success ? 'Connected' : 'Disconnected' }}
+        </span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Host:</span>
+        <span class="info-value">{{ storageInfo.config?.host }}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Bucket:</span>
+        <span class="info-value">{{ storageInfo.targetBucket }}</span>
+      </div>
+    </div>
+  </div>
+</p-sidebar>

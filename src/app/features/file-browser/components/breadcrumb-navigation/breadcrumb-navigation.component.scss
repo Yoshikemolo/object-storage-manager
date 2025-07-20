@@ -1,0 +1,44 @@
+.breadcrumb-navigation {
+  flex: 1;
+}
+
+::ng-deep .custom-breadcrumb {
+  background: transparent;
+  border: none;
+  padding: 0;
+  
+  .p-breadcrumb-list {
+    li {
+      .p-menuitem-link {
+        background: transparent;
+        border-radius: 6px;
+        transition: all 0.2s;
+        
+        &:hover {
+          background: var(--surface-hover);
+        }
+        
+        .p-menuitem-text {
+          color: var(--text-color);
+          font-weight: 500;
+        }
+        
+        .p-menuitem-icon {
+          color: var(--primary-color);
+        }
+      }
+      
+      &:last-child {
+        .p-menuitem-link {
+          .p-menuitem-text {
+            color: var(--text-color-secondary);
+          }
+        }
+      }
+      
+      .p-breadcrumb-chevron {
+        color: var(--text-color-secondary);
+      }
+    }
+  }
+}

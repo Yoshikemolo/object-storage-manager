@@ -1,0 +1,121 @@
+<div class="file-list">
+  <p-table 
+    [value]="files" 
+    [loading]="loading"
+    [scrollable]="true"
+    scrollHeight="400px"
+    [selection]="selectedFiles"
+    (selectionChange)="onSelectionChange()"
+    dataKey="path"
+    [rowHover]="true"
+    styleClass="file-table"
+    [responsiveLayout]="'scroll'">
+    
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th style="width: 3rem"></th>
+        <th pSortableColumn="name">
+          Name <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="size" style="width: 120px">
+          Size <p-sortIcon field="size"></p-sortIcon>
+        </th>
+        <th style="width: 100px">Type</th>
+        <th pSortableColumn="lastModified" style="width: 200px">
+          Modified <p-sortIcon field="lastModified"></p-sortIcon>
+        </th>
+        <th style="width: 100px"></th>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="body" let-file>
+      <tr 
+        [pSelectableRow]="file"
+        (dblclick)="onRowSelect({data: file})"
+        (contextmenu)="onContextMenu(file)"
+        class="file-row">
+        
+        <td>
+          <p-tableCheckbox [value]="file"></p-tableCheckbox>
+        </td>
+        
+        <td>
+          <i [class]="getFileIcon(file)" class="file-icon"></i>
+        </td>
+        
+        <td class="file-name">
+          <span 
+            [class.folder-name]="file.type === 'folder'"
+            [pTooltip]="file.name"
+            tooltipPosition="top">
+            {{ file.name }}
+          </span>
+        </td>
+        
+        <td>
+          <span *ngIf="file.type === 'file'">
+            {{ formatFileSize(file.size) }}
+          </span>
+          <span *ngIf="file.type === 'folder'" class="text-secondary">
+            --
+          </span>
+        </td>
+        
+        <td>
+          <p-tag 
+            [value]="getFileTypeTag(file)"
+            [severity]="getFileTypeColor(file)">
+          </p-tag>
+        </td>
+        
+        <td>
+          <span class="text-secondary">
+            {{ formatDate(file.lastModified) }}
+          </span>
+        </td>
+        
+        <td>
+          <button 
+            pButton 
+            type="button" 
+            icon="pi pi-ellipsis-v"
+            class="p-button-text p-button-rounded"
+            (click)="menu.toggle($event)">
+          </button>
+          <p-menu 
+            #menu 
+            [model]="contextMenuItems" 
+            [popup]="true"
+            appendTo="body">
+          </p-menu>
+        </td>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7" class="empty-message">
+          <div class="empty-state">
+            <i class="pi pi-folder-open"></i>
+            <p>No files or folders found</p>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="loadingbody">
+      <tr *ngFor="let _ of [1,2,3,4,5]">
+        <td><p-skeleton width="1.5rem" height="1.5rem"></p-skeleton></td>
+        <td><p-skeleton width="1.5rem" height="1.5rem"></p-skeleton></td>
+        <td><p-skeleton width="60%"></p-skeleton></td>
+        <td><p-skeleton width="80px"></p-skeleton></td>
+        <td><p-skeleton width="60px"></p-skeleton></td>
+        <td><p-skeleton width="150px"></p-skeleton></td>
+        <td><p-skeleton width="30px" height="30px" shape="circle"></p-skeleton></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

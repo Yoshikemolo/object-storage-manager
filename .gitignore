@@ -1,0 +1,42 @@
+# Node.js
+node_modules/
+package-lock.json
+
+# Angular
+dist/
+out-tsc/
+.angular/
+.angular/cache/
+coverage/
+
+# Editor configs
+.vscode/
+.idea/
+
+# Env
+.env
+.env.*
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+**/.docker/
+Dockerfile.*
+
+# Logs
+*.log
+logs/
+
+# NX/Cache
+.nx/
+.cache/
+*.tsbuildinfo
+
+# Misc
+*.local
+*.pid
+*.swp
+*.tmp
+*.tgz
+*.bak
+.husky/

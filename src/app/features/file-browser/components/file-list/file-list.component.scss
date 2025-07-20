@@ -1,0 +1,123 @@
+.file-list {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent overflow */
+}
+
+::ng-deep .file-table {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  .p-datatable {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    
+    .p-datatable-wrapper {
+      flex: 1;
+      overflow: auto;
+    }
+    
+    .p-datatable-header {
+      background: var(--surface-card);
+      border: none;
+      border-bottom: 1px solid var(--surface-border);
+      flex-shrink: 0;
+    }
+    
+    .p-datatable-thead > tr > th {
+      background: var(--surface-card);
+      border: none;
+      border-bottom: 2px solid var(--surface-border);
+      color: var(--text-color-secondary);
+      font-weight: 600;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .p-datatable-tbody > tr {
+      background: var(--surface-card);
+      
+      &:hover {
+        background: var(--surface-hover);
+        
+        .file-name {
+          color: var(--primary-color);
+        }
+      }
+      
+      &.p-highlight {
+        background: var(--surface-hover);
+      }
+      
+      td {
+        border: none;
+        border-bottom: 1px solid var(--surface-border);
+      }
+    }
+  }
+  
+  .p-datatable-emptymessage > td {
+    background: var(--surface-card);
+    border: none !important;
+  }
+}
+
+.file-row {
+  cursor: pointer;
+  user-select: none;
+}
+
+.file-icon {
+  font-size: 1.25rem;
+  color: var(--text-color-secondary);
+  
+  &.pi-folder {
+    color: var(--warning-color);
+  }
+  
+  &.pi-file-pdf {
+    color: var(--danger-color);
+  }
+  
+  &.pi-file-word {
+    color: var(--info-color);
+  }
+  
+  &.pi-file-excel {
+    color: var(--success-color);
+  }
+  
+  &.pi-image {
+    color: #8B5CF6;
+  }
+}
+
+.file-name {
+  font-weight: 500;
+  
+  .folder-name {
+    color: var(--primary-color);
+    font-weight: 600;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 0;
+  color: var(--text-color-secondary);
+  
+  i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 1.125rem;
+  }
+}

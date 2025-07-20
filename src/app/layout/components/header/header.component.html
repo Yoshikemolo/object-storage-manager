@@ -1,0 +1,36 @@
+<div class="app-header">
+  <div class="header-content">
+    <div class="header-left">
+      <button 
+        pButton 
+        pRipple 
+        type="button" 
+        icon="pi pi-bars"
+        class="p-button-rounded p-button-text p-button-plain menu-button"
+        (click)="toggleMenu()"
+        pTooltip="Toggle Menu">
+      </button>
+      
+      <div class="app-logo">
+        <i class="pi pi-database logo-icon"></i>
+        <span class="logo-text">Storage Manager</span>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <p-menubar [model]="menuItems" class="header-menu"></p-menubar>
+    </div>
+
+    <div class="header-right">
+      <button 
+        pButton 
+        pRipple 
+        type="button" 
+        [icon]="isDarkMode ? 'pi pi-sun' : 'pi pi-moon'"
+        class="p-button-rounded p-button-text p-button-plain theme-button"
+        (click)="toggleTheme()"
+        [pTooltip]="isDarkMode ? 'Light Mode' : 'Dark Mode'">
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<p-dialog 
+  [(visible)]="visible" 
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{width: '500px'}"
+  header="Upload Files"
+  [closable]="!uploading">
+  
+  <div class="upload-content">
+    <div class="upload-path">
+      <i class="pi pi-folder"></i>
+      <span>Upload to: {{ currentPath || '/' }}</span>
+    </div>
+    
+    <p-fileUpload 
+      name="files[]"
+      [multiple]="true"
+      [customUpload]="true"
+      (uploadHandler)="onUpload($event)"
+      [auto]="false"
+      chooseLabel="Choose Files"
+      uploadLabel="Upload"
+      cancelLabel="Clear"
+      [showUploadButton]="!uploading"
+      [showCancelButton]="!uploading">
+      
+      <ng-template pTemplate="toolbar">
+        <div class="upload-info">
+          Drag and drop files here or click to browse
+        </div>
+      </ng-template>
+      
+      <ng-template let-file pTemplate="file">
+        <div class="file-item">
+          <div class="file-details">
+            <span class="file-name">{{ file.name }}</span>
+            <span class="file-size">{{ formatSize(file.size) }}</span>
+          </div>
+        </div>
+      </ng-template>
+      
+      <ng-template pTemplate="content">
+        <div *ngIf="uploadedFiles.length === 0" class="upload-empty">
+          <i class="pi pi-cloud-upload"></i>
+          <p>No files selected</p>
+        </div>
+        
+        <div *ngIf="uploading" class="upload-progress">
+          <p-progressBar 
+            [value]="uploadProgress"
+            [showValue]="true">
+          </p-progressBar>
+          <p>Uploading files...</p>
+        </div>
+      </ng-template>
+    </p-fileUpload>
+  </div>
+  
+  <ng-template pTemplate="footer">
+    <button 
+      pButton 
+      label="Close" 
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="close()"
+      [disabled]="uploading">
+    </button>
+  </ng-template>
+</p-dialog>

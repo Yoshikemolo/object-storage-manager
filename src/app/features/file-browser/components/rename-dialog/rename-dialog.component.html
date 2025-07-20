@@ -1,0 +1,40 @@
+<p-dialog 
+  [(visible)]="visible" 
+  [modal]="true" 
+  header="Rename" 
+  [style]="{width: '450px'}"
+  (onHide)="hideDialog()">
+  
+  <div class="p-fluid" *ngIf="file">
+    <div class="field">
+      <label for="newName">New Name</label>
+      <input 
+        type="text" 
+        pInputText 
+        id="newName" 
+        [(ngModel)]="newName"
+        (keyup.enter)="rename()"
+        placeholder="Enter new name" />
+    </div>
+    <div class="text-muted">
+      <small>Current: {{ file.name }}</small>
+    </div>
+  </div>
+  
+  <ng-template pTemplate="footer">
+    <button 
+      pButton 
+      label="Cancel" 
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()">
+    </button>
+    <button 
+      pButton 
+      label="Rename" 
+      icon="pi pi-check"
+      [disabled]="!newName.trim() || newName === file?.name"
+      (click)="rename()">
+    </button>
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,56 @@
+.file-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.actions-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.actions-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.actions-divider {
+  width: 1px;
+  height: 32px;
+  background-color: var(--surface-border);
+  margin: 0 0.5rem;
+  
+  @media (max-width: 576px) {
+    display: none;
+  }
+}
+
+::ng-deep {
+  .p-button {
+    font-weight: 500;
+    padding: 0.25rem 1rem;
+    border: 1px solid transparent;
+    
+    &.p-button-icon-only {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .p-button-label {
+      display: none;
+    }
+    
+    .p-button {
+      .pi {
+        margin-right: 0;
+      }
+    }
+  }
+}

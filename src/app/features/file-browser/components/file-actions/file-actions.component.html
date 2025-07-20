@@ -1,0 +1,62 @@
+<div class="file-actions">
+  <div class="actions-left">
+    <button 
+      pButton 
+      pRipple 
+      type="button" 
+      icon="pi pi-upload"
+      label="Upload"
+      class="p-button-secondary"
+      (click)="upload.emit()">
+    </button>
+    
+    <button 
+      pButton 
+      pRipple 
+      type="button" 
+      icon="pi pi-folder-plus"
+      label="New Folder"
+      class="p-button-secondary"
+      (click)="createFolder.emit()">
+    </button>
+    
+    <div class="actions-divider"></div>
+    
+    <button 
+      pButton 
+      pRipple 
+      type="button" 
+      icon="pi pi-download"
+      pTooltip="Download selected"
+      tooltipPosition="bottom"
+      class="p-button-outlined"
+      [disabled]="selectedFiles.length === 0"
+      (click)="downloadSelected.emit()">
+    </button>
+    
+    <button 
+      pButton 
+      pRipple 
+      type="button" 
+      icon="pi pi-trash"
+      pTooltip="Delete selected"
+      tooltipPosition="bottom"
+      class="p-button-outlined p-button-danger"
+      [disabled]="selectedFiles.length === 0"
+      (click)="deleteSelected.emit()">
+    </button>
+  </div>
+  
+  <div class="actions-right">
+    <button 
+      pButton 
+      pRipple 
+      type="button" 
+      icon="pi pi-refresh"
+      pTooltip="Refresh"
+      tooltipPosition="bottom"
+      class="p-button-text p-button-rounded"
+      (click)="refresh.emit()">
+    </button>
+  </div>
+</div>

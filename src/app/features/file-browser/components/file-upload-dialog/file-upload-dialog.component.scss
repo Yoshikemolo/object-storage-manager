@@ -1,0 +1,104 @@
+.upload-content {
+  min-height: 300px;
+}
+
+.upload-path {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: var(--surface-hover);
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  
+  i {
+    color: var(--primary-color);
+  }
+  
+  span {
+    font-weight: 500;
+    color: var(--text-color);
+  }
+}
+
+.upload-info {
+  text-align: center;
+  color: var(--text-color-secondary);
+  padding: 1rem;
+}
+
+.file-item {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--surface-border);
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.file-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  .file-name {
+    font-weight: 500;
+    color: var(--text-color);
+  }
+  
+  .file-size {
+    color: var(--text-color-secondary);
+    font-size: 0.875rem;
+  }
+}
+
+.upload-empty {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-color-secondary);
+  
+  i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 1.125rem;
+  }
+}
+
+.upload-progress {
+  padding: 2rem;
+  text-align: center;
+  
+  p {
+    margin-top: 1rem;
+    color: var(--text-color-secondary);
+  }
+}
+
+::ng-deep {
+  .p-fileupload {
+    border: 2px dashed var(--surface-border);
+    border-radius: 6px;
+    background-color: var(--surface-ground);
+    
+    &:hover {
+      border-color: var(--primary-color);
+    }
+    
+    .p-fileupload-buttonbar {
+      background: transparent;
+      border: none;
+      padding: 1rem;
+    }
+    
+    .p-fileupload-content {
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+  }
+}

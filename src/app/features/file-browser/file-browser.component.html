@@ -1,0 +1,53 @@
+<div class="file-browser">
+  <p-toast></p-toast>
+  <p-confirmDialog></p-confirmDialog>
+  
+  <div class="file-browser-header">
+    <app-breadcrumb-navigation 
+      [currentPath]="currentPath"
+      (navigate)="onNavigate($event)">
+    </app-breadcrumb-navigation>
+    
+    <app-file-actions 
+      [selectedFiles]="selectedFiles"
+      [currentPath]="currentPath"
+      (upload)="uploadDialogVisible = true"
+      (createFolder)="createFolderDialogVisible = true"
+      (deleteSelected)="deleteSelected()"
+      (downloadSelected)="downloadSelected()"
+      (refresh)="loadFiles(currentPath)">
+    </app-file-actions>
+  </div>
+  
+  <div class="file-browser-content">
+    <app-file-list 
+      [files]="files"
+      [loading]="loading"
+      [currentPath]="currentPath"
+      (navigate)="onNavigate($event)"
+      (fileAction)="onFileAction($event)"
+      (selectionChange)="onSelectionChange($event)">
+    </app-file-list>
+  </div>
+  
+  <!-- Upload Dialog -->
+  <app-file-upload-dialog 
+    [(visible)]="uploadDialogVisible"
+    [currentPath]="currentPath"
+    (uploadComplete)="onUploadComplete()">
+  </app-file-upload-dialog>
+  
+  <!-- Create Folder Dialog -->
+  <app-create-folder-dialog 
+    [(visible)]="createFolderDialogVisible"
+    [currentPath]="currentPath"
+    (folderCreated)="onFolderCreated($event)">
+  </app-create-folder-dialog>
+  
+  <!-- Rename Dialog -->
+  <app-rename-dialog 
+    [(visible)]="renameDialogVisible"
+    [file]="fileToRename"
+    (renamed)="onFileRenamed($event)">
+  </app-rename-dialog>
+</div>

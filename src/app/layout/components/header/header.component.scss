@@ -1,0 +1,112 @@
+.app-header {
+  background-color: var(--surface-card);
+  border-bottom: 1px solid var(--surface-border);
+  box-shadow: var(--shadow-1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  height: 64px;
+  gap: 2rem; /* Add spacing between header sections */
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.menu-button {
+  @media (min-width: 992px) {
+    display: none;
+  }
+}
+
+.app-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-color);
+  
+  .logo-icon {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+  }
+}
+
+.header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin: 0 1rem; /* Add margin to prevent overlap */
+  max-width: 500px; /* Limit width to prevent stretching */
+  
+  @media (max-width: 991px) {
+    display: none;
+  }
+}
+
+.header-menu {
+  border: none;
+  background: transparent;
+  width: 100%;
+  
+  ::ng-deep {
+    .p-menubar {
+      background: transparent;
+      border: none;
+      padding: 0.5rem 1rem;
+      
+      .p-menubar-root-list {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        width: 100%;
+        
+        .p-menuitem {
+          .p-menuitem-link {
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            transition: all 0.2s;
+            
+            &:hover {
+              background-color: var(--surface-hover);
+            }
+            
+            &:focus {
+              box-shadow: var(--focus-ring);
+            }
+          }
+          
+          &.p-menuitem-active {
+            .p-menuitem-link {
+              background-color: var(--primary-color);
+              color: var(--primary-color-text);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.theme-button {
+  &:hover {
+    background-color: var(--surface-hover);
+  }
+}

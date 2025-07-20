@@ -1,0 +1,37 @@
+<p-dialog 
+  [(visible)]="visible" 
+  [modal]="true" 
+  header="Create New Folder" 
+  [style]="{width: '450px'}"
+  (onHide)="hideDialog()">
+  
+  <div class="p-fluid">
+    <div class="field">
+      <label for="folderName">Folder Name</label>
+      <input 
+        type="text" 
+        pInputText 
+        id="folderName" 
+        [(ngModel)]="folderName"
+        (keyup.enter)="createFolder()"
+        placeholder="Enter folder name" />
+    </div>
+  </div>
+  
+  <ng-template pTemplate="footer">
+    <button 
+      pButton 
+      label="Cancel" 
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()">
+    </button>
+    <button 
+      pButton 
+      label="Create" 
+      icon="pi pi-check"
+      [disabled]="!folderName.trim()"
+      (click)="createFolder()">
+    </button>
+  </ng-template>
+</p-dialog>

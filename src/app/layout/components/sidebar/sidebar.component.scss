@@ -1,0 +1,116 @@
+::ng-deep .app-sidebar {
+  width: 280px;
+  background-color: var(--surface-card);
+  border-right: 1px solid var(--surface-border);
+  transition: background-color 0.3s, border-color 0.3s;
+  
+  .p-sidebar-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--surface-border);
+    transition: border-color 0.3s;
+  }
+  
+  .p-sidebar-content {
+    padding: 0;
+  }
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-color);
+  transition: color 0.3s;
+  
+  i {
+    color: var(--primary-color);
+    transition: color 0.3s;
+  }
+}
+
+.sidebar-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-menu {
+  border: none;
+  background: transparent;
+  
+  ::ng-deep {
+    .p-menu {
+      width: 100%;
+      border: none;
+      background: transparent;
+      
+      .p-submenu-header {
+        background: transparent;
+        font-weight: 600;
+        color: var(--text-color-secondary);
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        padding: 1rem 1.5rem 0.5rem;
+      }
+      
+      .p-menuitem {
+        .p-menuitem-link {
+          padding: 0.75rem 1.5rem;
+          border-radius: 0;
+          transition: all 0.2s;
+          
+          &:hover {
+            background-color: var(--surface-hover);
+          }
+          
+          &.p-menuitem-link-active {
+            background-color: var(--surface-hover);
+            border-left: 3px solid var(--primary-color);
+          }
+          
+          .p-menuitem-icon {
+            margin-right: 0.75rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+.storage-info {
+  margin-top: auto;
+  padding: 1.5rem;
+  border-top: 1px solid var(--surface-border);
+  
+  h4 {
+    margin: 0 0 1rem 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-color-secondary);
+    text-transform: uppercase;
+  }
+  
+  .info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    
+    .info-label {
+      color: var(--text-color-secondary);
+    }
+    
+    .info-value {
+      color: var(--text-color);
+      font-weight: 500;
+      
+      i {
+        font-size: 0.5rem;
+        margin-right: 0.25rem;
+      }
+    }
+  }
+}
