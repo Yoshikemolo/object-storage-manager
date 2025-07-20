@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, OnInit, DoCheck } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FileInfo } from '@core/services/storage.service';
@@ -28,20 +28,116 @@ import { SkeletonModule } from 'primeng/skeleton';
   templateUrl: './file-list.component.html',
   styleUrls: ['./file-list.component.scss']
 })
-export class FileListComponent {
-  @Input() files: FileInfo[] = [];
+export class FileListComponent implements OnInit, DoCheck {
+  @Input() set files(value: FileInfo[]) {
+    this._files = this.enrichFilesWithSortData(value);
+    // Re-sync selection after files are updated
+    this.syncSelectionAfterFilesUpdate();
+  }
+  
+  get files(): any[] {
+    return this._files;
+  }
+  
+  private _files: any[] = [];
   @Input() loading = false;
   @Input() currentPath = '';
+  @Input() set selectedFilesFromParent(value: FileInfo[]) {
+    // Sync selection from parent component
+    if (value) {
+      // Map selected files from parent to enriched files in this component
+      this.selectedFiles = this._files.filter(file => 
+        value.some(selected => selected.path === file.path)
+      );
+    } else {
+      this.selectedFiles = [];
+    }
+  }
   @Output() navigate = new EventEmitter<string>();
   @Output() fileAction = new EventEmitter<{ type: string; file?: FileInfo }>();
   @Output() selectionChange = new EventEmitter<FileInfo[]>();
   
   @ViewChild('menu') menu!: Menu;
   
-  selectedFiles: FileInfo[] = [];
+  selectedFiles: any[] = [];
+  private previousSelectionLength = 0;
+  
+  ngOnInit(): void {
+    // Initialize component
+  }
+  
+  ngDoCheck(): void {
+    // Detect changes in selection array length
+    if (this.selectedFiles.length !== this.previousSelectionLength) {
+      this.previousSelectionLength = this.selectedFiles.length;
+      console.log('Selection changed:', this.selectedFiles);
+      // Use setTimeout to avoid ExpressionChangedAfterItHasBeenCheckedError
+      setTimeout(() => {
+        const fileInfos: FileInfo[] = this.selectedFiles.map(file => ({
+          name: file.name,
+          path: file.path,
+          size: file.size,
+          type: file.type,
+          lastModified: file.lastModified
+        }));
+        this.selectionChange.emit(fileInfos);
+      }, 0);
+    }
+  }
+  
   contextMenuItems: MenuItem[] = [];
 
   constructor(private storageService: StorageService) {}
+
+  /**
+   * Sync selection after files are updated to maintain selection state
+   */
+  private syncSelectionAfterFilesUpdate(): void {
+    if (this.selectedFiles.length > 0) {
+      // Get the paths of currently selected files
+      const selectedPaths = this.selectedFiles.map(file => file.path);
+      // Re-map selection to updated files array
+      this.selectedFiles = this._files.filter(file => 
+        selectedPaths.includes(file.path)
+      );
+    }
+  }
+
+  /**
+   * Enrich files with additional sorting data
+   */
+  private enrichFilesWithSortData(files: FileInfo[]): any[] {
+    return files.map(file => ({
+      ...file,
+      typeSortValue: this.getTypeSortValue(file),
+      typeDisplay: this.getFileTypeTag(file)
+    }));
+  }
+
+  /**
+   * Get sort value for file type to enable proper sorting
+   * Folders come first, then files sorted by extension
+   */
+  getTypeSortValue(file: FileInfo): string {
+    if (file.type === 'folder') {
+      return '0_folder'; // Prefix with 0 to sort first
+    }
+    
+    const extension = file.name.split('.').pop()?.toLowerCase() || 'unknown';
+    return `1_${extension}`; // Prefix with 1 to sort after folders
+  }
+
+  /**
+   * Get file extension for display
+   */
+  getFileExtension(file: FileInfo): string {
+    if (file.type === 'folder') {
+      return 'Folder';
+    }
+    
+    const extension = file.name.split('.').pop()?.toLowerCase();
+    return extension ? extension.toUpperCase() : 'File';
+  }
 
   onRowSelect(event: any): void {
     const file: FileInfo = event.data;
@@ -74,9 +170,11 @@ export class FileListComponent {
     ];
   }
 
-  onSelectionChange(): void {
-    this.selectionChange.emit(this.selectedFiles);
+  isAllSelected(): boolean {
+    return this.selectedFiles.length === this._files.length && this._files.length > 0;
   }
+
+
 
   getFileIcon(file: FileInfo): string {
     if (file.type === 'folder') {

@@ -47,20 +47,8 @@ export class ThemeService {
   }
 
   private updatePrimeNGTheme(theme: Theme): void {
-    const themeLink = document.getElementById('app-theme') as HTMLLinkElement;
-    
-    if (themeLink) {
-      const themeName = theme === 'dark' ? 'lara-dark-blue' : 'lara-light-blue';
-      themeLink.href = `node_modules/primeng/resources/themes/${themeName}/theme.css`;
-    } else {
-      // Create theme link if it doesn't exist
-      const link = document.createElement('link');
-      link.id = 'app-theme';
-      link.rel = 'stylesheet';
-      link.type = 'text/css';
-      const themeName = theme === 'dark' ? 'lara-dark-blue' : 'lara-light-blue';
-      link.href = `node_modules/primeng/resources/themes/${themeName}/theme.css`;
-      document.head.appendChild(link);
-    }
+    // PrimeNG v19 themes are handled via CSS variables in styles.scss
+    // No need to load external CSS files
+    console.log(`Theme switched to: ${theme}`);
   }
 }

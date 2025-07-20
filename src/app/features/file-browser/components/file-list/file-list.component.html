@@ -3,18 +3,20 @@
     [value]="files" 
     [loading]="loading"
     [scrollable]="true"
-    scrollHeight="400px"
-    [selection]="selectedFiles"
-    (selectionChange)="onSelectionChange()"
+    scrollHeight="calc(100vh - 280px)"
+    [(selection)]="selectedFiles"
     dataKey="path"
+    selectionMode="multiple"
+    [metaKeySelection]="false"
     [rowHover]="true"
     styleClass="file-table"
-    [responsiveLayout]="'scroll'">
+    [responsiveLayout]="'scroll'"
+    [lazy]="false">
     
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 3rem">
-          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        <th style="width: 4rem">
+          <p-tableHeaderCheckbox />
         </th>
         <th style="width: 3rem"></th>
         <th pSortableColumn="name">
@@ -23,7 +25,9 @@
         <th pSortableColumn="size" style="width: 120px">
           Size <p-sortIcon field="size"></p-sortIcon>
         </th>
-        <th style="width: 100px">Type</th>
+        <th pSortableColumn="typeSortValue" style="width: 100px">
+          Type <p-sortIcon field="typeSortValue"></p-sortIcon>
+        </th>
         <th pSortableColumn="lastModified" style="width: 200px">
           Modified <p-sortIcon field="lastModified"></p-sortIcon>
         </th>
@@ -32,14 +36,9 @@
     </ng-template>
     
     <ng-template pTemplate="body" let-file>
-      <tr 
-        [pSelectableRow]="file"
-        (dblclick)="onRowSelect({data: file})"
-        (contextmenu)="onContextMenu(file)"
-        class="file-row">
-        
+      <tr class="file-row">
         <td>
-          <p-tableCheckbox [value]="file"></p-tableCheckbox>
+          <p-tableCheckbox [value]="file" />
         </td>
         
         <td>
@@ -50,7 +49,10 @@
           <span 
             [class.folder-name]="file.type === 'folder'"
             [pTooltip]="file.name"
-            tooltipPosition="top">
+            tooltipPosition="top"
+            (dblclick)="onRowSelect({data: file})"
+            (contextmenu)="onContextMenu(file)"
+            style="cursor: pointer;">
             {{ file.name }}
           </span>
         </td>

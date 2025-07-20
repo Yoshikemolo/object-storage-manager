@@ -480,31 +480,257 @@ body {
   scrollbar-color: var(--surface-400) var(--surface-100);
 }
 
-/* Tooltip styles for dark mode */
+/* Tooltip styles for both light and dark modes */
 .p-tooltip {
-  background: var(--surface-800);
-  color: var(--text-color);
-  border: 1px solid var(--surface-border);
-  box-shadow: var(--shadow-2);
-  border-radius: var(--border-radius);
-  font-family: 'Inter', sans-serif;
-  font-size: 0.875rem;
+  background: var(--surface-700) !important;
+  color: var(--surface-0) !important;
+  border: 1px solid var(--surface-600) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  border-radius: 6px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  padding: 0.5rem 0.75rem !important;
+  max-width: 300px !important;
+  z-index: 9999 !important;
+}
+
+.p-tooltip-text {
+  color: var(--surface-0) !important;
+  font-weight: 500 !important;
 }
 
 .p-tooltip.p-tooltip-top .p-tooltip-arrow {
-  border-top-color: var(--surface-800);
+  border-top-color: var(--surface-700) !important;
 }
 
 .p-tooltip.p-tooltip-bottom .p-tooltip-arrow {
-  border-bottom-color: var(--surface-800);
+  border-bottom-color: var(--surface-700) !important;
 }
 
 .p-tooltip.p-tooltip-left .p-tooltip-arrow {
-  border-left-color: var(--surface-800);
+  border-left-color: var(--surface-700) !important;
 }
 
 .p-tooltip.p-tooltip-right .p-tooltip-arrow {
-  border-right-color: var(--surface-800);
+  border-right-color: var(--surface-700) !important;
+}
+
+/* Dark mode tooltip adjustments */
+[data-theme="dark"] .p-tooltip {
+  background: var(--surface-200) !important;
+  color: var(--surface-900) !important;
+  border-color: var(--surface-300) !important;
+}
+
+[data-theme="dark"] .p-tooltip-text {
+  color: var(--surface-900) !important;
+}
+
+[data-theme="dark"] .p-tooltip.p-tooltip-top .p-tooltip-arrow {
+  border-top-color: var(--surface-200) !important;
+}
+
+[data-theme="dark"] .p-tooltip.p-tooltip-bottom .p-tooltip-arrow {
+  border-bottom-color: var(--surface-200) !important;
+}
+
+[data-theme="dark"] .p-tooltip.p-tooltip-left .p-tooltip-arrow {
+  border-left-color: var(--surface-200) !important;
+}
+
+[data-theme="dark"] .p-tooltip.p-tooltip-right .p-tooltip-arrow {
+  border-right-color: var(--surface-200) !important;
+}
+
+/* PrimeNG Checkbox Global Fixes */
+.p-checkbox {
+  position: relative !important;
+  display: inline-flex !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  vertical-align: bottom !important;
+}
+
+.p-checkbox .p-checkbox-box {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  border: 2px solid var(--surface-400) !important;
+  background: var(--surface-0) !important;
+  width: 1.125rem !important;
+  height: 1.125rem !important;
+  border-radius: 4px !important;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s !important;
+  outline-color: transparent !important;
+}
+
+.p-checkbox .p-checkbox-box:not(.p-disabled):hover {
+  border-color: var(--primary-color) !important;
+  background: var(--surface-50) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1) !important;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight {
+  border-color: var(--primary-color) !important;
+  background: var(--primary-color) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}
+
+.p-checkbox .p-checkbox-box.p-indeterminate {
+  border-color: var(--primary-color) !important;
+  background: var(--primary-color) !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+}
+
+.p-checkbox .p-checkbox-input {
+  position: absolute !important;
+  appearance: none !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  opacity: 0 !important;
+  z-index: 1 !important;
+  outline: 0 none !important;
+  border: 0 none !important;
+  cursor: pointer !important;
+}
+
+.p-checkbox .p-checkbox-icon {
+  transition-duration: 0.2s !important;
+  color: white !important;
+  font-size: 0.75rem !important;
+  font-weight: bold !important;
+  width: 0.75rem !important;
+  height: 0.75rem !important;
+  line-height: 0.75rem !important;
+}
+
+.p-checkbox .p-checkbox-icon.pi-check {
+  color: white !important;
+}
+
+.p-checkbox .p-checkbox-icon.pi-minus {
+  color: white !important;
+}
+
+/* Ensure checkbox icons are always visible when checked */
+.p-checkbox .p-checkbox-box.p-highlight .p-checkbox-icon,
+.p-checkbox .p-checkbox-box.p-indeterminate .p-checkbox-icon {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: flex !important;
+}
+
+/* Force checkbox state visibility */
+.p-checkbox-box.p-highlight::before {
+  content: "✓" !important;
+  color: white !important;
+  font-size: 0.75rem !important;
+  font-weight: bold !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 2 !important;
+}
+
+.p-checkbox-box.p-indeterminate::before {
+  content: "−" !important;
+  color: white !important;
+  font-size: 0.875rem !important;
+  font-weight: bold !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 2 !important;
+}
+
+/* Dark mode adjustments */
+[data-theme="dark"] .p-checkbox .p-checkbox-box {
+  border-color: var(--surface-600) !important;
+  background: var(--surface-800) !important;
+}
+
+[data-theme="dark"] .p-checkbox .p-checkbox-box:not(.p-disabled):hover {
+  border-color: var(--primary-color) !important;
+  background: var(--surface-700) !important;
+}
+
+[data-theme="dark"] .p-checkbox .p-checkbox-box.p-highlight,
+[data-theme="dark"] .p-checkbox .p-checkbox-box.p-indeterminate {
+  border-color: var(--primary-color) !important;
+  background: var(--primary-color) !important;
+}
+
+/* Sidebar global styles */
+.p-sidebar {
+  background: var(--surface-card) !important;
+  border: 1px solid var(--surface-border) !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.p-sidebar .p-sidebar-header {
+  background: var(--surface-card) !important;
+  border-bottom: 1px solid var(--surface-border) !important;
+  padding: 1rem 1.5rem !important;
+}
+
+.p-sidebar .p-sidebar-header .p-sidebar-close {
+  color: var(--text-color) !important;
+  transition: color 0.2s !important;
+}
+
+.p-sidebar .p-sidebar-header .p-sidebar-close:hover {
+  color: var(--primary-color) !important;
+}
+
+.p-sidebar .p-sidebar-content {
+  background: var(--surface-card) !important;
+  color: var(--text-color) !important;
+}
+
+/* Sidebar menu styles */
+.p-sidebar .p-menu {
+  background: transparent !important;
+  border: none !important;
+}
+
+.p-sidebar .p-menu .p-menuitem {
+  margin: 0.125rem 0 !important;
+}
+
+.p-sidebar .p-menu .p-menuitem-link {
+  padding: 0.75rem 1.5rem !important;
+  color: var(--text-color) !important;
+  border-radius: 0 !important;
+  transition: all 0.2s !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+.p-sidebar .p-menu .p-menuitem-link:hover {
+  background: var(--surface-hover) !important;
+  color: var(--primary-color) !important;
+}
+
+.p-sidebar .p-menu .p-menuitem-link.p-disabled {
+  color: var(--text-color-secondary) !important;
+  opacity: 0.6 !important;
+}
+
+.p-sidebar .p-menu .p-menuitem-icon {
+  color: var(--text-color-secondary) !important;
+  transition: color 0.2s !important;
+}
+
+.p-sidebar .p-menu .p-menuitem-link:hover .p-menuitem-icon {
+  color: var(--primary-color) !important;
 }
 
 /* Tag styles for better dark mode support */
@@ -513,7 +739,7 @@ body {
   width: 100%;
   height: 100%;
   color: var(--text-color);
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius) !important;
   font-family: 'Inter', sans-serif;
   font-size: 0.75rem;
   font-weight: 500;

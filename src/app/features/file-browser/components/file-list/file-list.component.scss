@@ -1,23 +1,13 @@
 .file-list {
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden; /* Prevent overflow */
 }
 
 ::ng-deep .file-table {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  
   .p-datatable {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
     
     .p-datatable-wrapper {
-      flex: 1;
       overflow: auto;
+      /* Remove flex configuration since we're using calculated height */
     }
     
     .p-datatable-header {
@@ -36,10 +26,19 @@
       font-size: 0.875rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      padding: 1rem;
+      
+      /* Ensure header checkbox column is visible */
+      &:first-child {
+        text-align: center;
+        width: 3rem !important;
+        min-width: 3rem;
+      }
     }
     
     .p-datatable-tbody > tr {
       background: var(--surface-card);
+      transition: background-color 0.2s, transform 0.1s;
       
       &:hover {
         background: var(--surface-hover);
@@ -49,13 +48,47 @@
         }
       }
       
+      &.p-selectable-row:hover {
+        background: var(--highlight-bg);
+      }
+      
       &.p-highlight {
-        background: var(--surface-hover);
+        background: var(--highlight-bg) !important;
+        color: var(--highlight-text-color);
+        
+        .file-name {
+          color: var(--highlight-text-color);
+          font-weight: 500;
+        }
+        
+        &:hover {
+          background: var(--primary-color) !important;
+          color: var(--primary-color-text);
+          
+          .file-name {
+            color: var(--primary-color-text);
+          }
+        }
       }
       
       td {
         border: none;
         border-bottom: 1px solid var(--surface-border);
+        padding: 1rem;
+        
+        /* Style checkbox column */
+        &:first-child {
+          text-align: center;
+          width: 3rem;
+          padding: 0.5rem;
+        }
+        
+        /* Style icon column */
+        &:nth-child(2) {
+          text-align: center;
+          width: 3rem;
+          padding: 0.5rem;
+        }
       }
     }
   }
@@ -119,5 +152,42 @@
   p {
     margin: 0;
     font-size: 1.125rem;
+  }
+}
+
+// Table-specific checkbox adjustments
+::ng-deep .file-table {
+  // Header checkbox size adjustment
+  .p-datatable-thead .p-checkbox .p-checkbox-box {
+    width: 1.125rem !important;
+    height: 1.125rem !important;
+  }
+  
+  .p-datatable-thead .p-checkbox .p-checkbox-icon {
+    font-size: 0.75rem !important;
+  }
+  
+  // Body checkbox size adjustment  
+  .p-datatable-tbody .p-checkbox .p-checkbox-box {
+    width: 1rem !important;
+    height: 1rem !important;
+  }
+  
+  .p-datatable-tbody .p-checkbox .p-checkbox-icon {
+    font-size: 0.625rem !important;
+  }
+  
+  // Ensure checkboxes are centered in their cells
+  .p-datatable-thead th:first-child,
+  .p-datatable-tbody td:first-child {
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+  
+  // Ensure header checkbox cell is properly styled
+  .p-datatable-thead th:first-child {
+    background: var(--surface-card) !important;
+    text-align: center !important;
+    vertical-align: middle !important;
   }
 }

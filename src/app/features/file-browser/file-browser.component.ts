@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StorageService, FileInfo } from '@core/services/storage.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
@@ -45,7 +45,8 @@ export class FileBrowserComponent implements OnInit {
   constructor(
     private storageService: StorageService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    @Inject(ChangeDetectorRef) private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -214,7 +215,9 @@ export class FileBrowserComponent implements OnInit {
   }
 
   onSelectionChange(selectedFiles: FileInfo[]): void {
+    console.log('Selected files:', selectedFiles);
     this.selectedFiles = selectedFiles;
+    this.cdr.detectChanges(); // Ensure view updates with new selection
   }
 
   deleteSelected(): void {
