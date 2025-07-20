@@ -11,12 +11,26 @@
     [rowHover]="true"
     styleClass="file-table"
     [responsiveLayout]="'scroll'"
-    [lazy]="false">
+    [lazy]="false"
+    (onRowSelect)="onRowSelect($event)"
+    >
     
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 4rem">
-          <p-tableHeaderCheckbox />
+          <!-- <p-tableHeaderCheckbox /> -->
+           <i
+            class="pi pi-check-square"
+            *ngIf="areAllFilesSelected()"
+            (click)="onUnSelectAllFiles()"
+            style="cursor: pointer;">
+          </i>
+          <i 
+            class="pi pi-stop"
+            *ngIf="!areAllFilesSelected()"
+            (click)="onSelectAllFiles()"
+            style="cursor: pointer;">
+          </i>
         </th>
         <th style="width: 3rem"></th>
         <th pSortableColumn="name">
@@ -36,9 +50,22 @@
     </ng-template>
     
     <ng-template pTemplate="body" let-file>
-      <tr class="file-row">
+      <tr class="file-row" (click)="onRowSelect({data: file})">
         <td>
-          <p-tableCheckbox [value]="file" />
+          <!-- icon component Checkbox square icon if file.path is inside selectedFiles. Otherwise an empty box -->
+          <i
+            class="pi pi-check-square"
+            *ngIf="isFileSelected(file)"
+            (click)="onSelectFile(file)"
+            style="cursor: pointer;">
+          </i>
+          <i 
+            class="pi pi-stop"
+            *ngIf="!isFileSelected(file)"
+            (click)="onSelectFile(file)"
+            style="cursor: pointer;">
+          </i>
+
         </td>
         
         <td>

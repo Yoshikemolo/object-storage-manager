@@ -215,7 +215,6 @@ export class FileBrowserComponent implements OnInit {
   }
 
   onSelectionChange(selectedFiles: FileInfo[]): void {
-    console.log('Selected files:', selectedFiles);
     this.selectedFiles = selectedFiles;
     this.cdr.detectChanges(); // Ensure view updates with new selection
   }

@@ -60,6 +60,7 @@ export class FileListComponent implements OnInit, DoCheck {
   @ViewChild('menu') menu!: Menu;
   
   selectedFiles: any[] = [];
+  selectedPaths: string[] = [];
   private previousSelectionLength = 0;
   
   ngOnInit(): void {
@@ -70,7 +71,6 @@ export class FileListComponent implements OnInit, DoCheck {
     // Detect changes in selection array length
     if (this.selectedFiles.length !== this.previousSelectionLength) {
       this.previousSelectionLength = this.selectedFiles.length;
-      console.log('Selection changed:', this.selectedFiles);
       // Use setTimeout to avoid ExpressionChangedAfterItHasBeenCheckedError
       setTimeout(() => {
         const fileInfos: FileInfo[] = this.selectedFiles.map(file => ({
@@ -89,16 +89,20 @@ export class FileListComponent implements OnInit, DoCheck {
 
   constructor(private storageService: StorageService) {}
 
+  isFileSelected(file: FileInfo): boolean {
+    return this.selectedFiles.some(selected => selected.path === file.path);
+  }
+
   /**
    * Sync selection after files are updated to maintain selection state
    */
   private syncSelectionAfterFilesUpdate(): void {
     if (this.selectedFiles.length > 0) {
       // Get the paths of currently selected files
-      const selectedPaths = this.selectedFiles.map(file => file.path);
+      this. selectedPaths = this.selectedFiles.map(file => file.path);
       // Re-map selection to updated files array
       this.selectedFiles = this._files.filter(file => 
-        selectedPaths.includes(file.path)
+        this.selectedPaths.includes(file.path)
       );
     }
   }
@@ -137,6 +141,41 @@ export class FileListComponent implements OnInit, DoCheck {
     
     const extension = file.name.split('.').pop()?.toLowerCase();
     return extension ? extension.toUpperCase() : 'File';
+  }
+
+  onSelectFile(file: FileInfo): void {
+    if (file.type === 'folder') {
+      // Handle folder selection
+    }
+    // Check if file is in selectedFiles to remove it. Otherwise add the file to the selected files. Lastly emit a selectionChange event
+    const isAlreadySelected = this.selectedFiles.some(selected => selected.path === file.path);
+    if (isAlreadySelected) {
+      this.selectedFiles = this.selectedFiles.filter(selected => selected.path !== file.path);
+    } else {
+      this.selectedFiles.push(file);
+    }
+    // Emit selection change
+    this.selectionChange.emit(this.selectedFiles);
+  }
+
+  onSelectAllFiles(): void {
+    if (this.isAllSelected()) {
+      this.selectedFiles = [];
+    } else {
+      this.selectedFiles = [...this._files];
+    }
+    // Emit selection change
+    this.selectionChange.emit(this.selectedFiles);
+  }
+
+  onUnSelectAllFiles(): void {
+    this.selectedFiles = [];
+    // Emit selection change
+    this.selectionChange.emit(this.selectedFiles);
+  }
+
+  areAllFilesSelected(): boolean {
+    return this.selectedFiles.length === this._files.length && this._files.length > 0 && this._files.every(file => this.selectedFiles.some(selected => selected.path === file.path));
   }
 
   onRowSelect(event: any): void {
